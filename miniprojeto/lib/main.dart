@@ -10,7 +10,7 @@ class BookStoreApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Book Store',
+      title: 'BookStore',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -31,7 +31,8 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
     final response = await http.get(Uri.https(
       'www.googleapis.com',
       '/books/v1/volumes',
-      {'q': 'romance'},
+      {'q': 'romance',
+      'key': 'AIzaSyA5jvZzwUztQ4NT1c7YicLnOKTcUFQmutA'}
     ));
 
     if (response.statusCode == 200) {
