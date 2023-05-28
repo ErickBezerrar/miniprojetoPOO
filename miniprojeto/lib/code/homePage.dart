@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -74,14 +75,13 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: Image.network(thumbnail,
-                      fit: BoxFit.cover)
-                      // imageUrl: thumbnail,
-                      // fit: BoxFit.cover,
-                      // placeholder: (context, url) =>
-                      //     CircularProgressIndicator(),
-                      // errorWidget: (context, url, error) => Icon(Icons.error),
-                    // ),
+                    child: CachedNetworkImage(
+                      imageUrl: thumbnail,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
                   ),
                   SizedBox(height: 8.0),
                   Padding(
