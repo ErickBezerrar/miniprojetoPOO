@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'newAccount.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = [
     HomePageContent(),
     CartPageContent(),
-    ProfilePageContent(),
+    MyForm(), // Tela do formulário
   ];
 
   @override
@@ -98,26 +98,26 @@ class HomePageContent extends StatelessWidget {
   }
 }
 
-class ProfilePageContent extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color.fromRGBO(206, 252, 252, 1.0),
-            Colors.white,
-          ],
-        ),
-      ),
-      child: Center(
-        child: Text('Esta é a tela do perfil'),
-      ),
-    );
-  }
-}
+// class ProfilePageContent extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       decoration: BoxDecoration(
+//         gradient: LinearGradient(
+//           begin: Alignment.topCenter,
+//           end: Alignment.bottomCenter,
+//           colors: [
+//             Color.fromRGBO(206, 252, 252, 1.0),
+//             Colors.white,
+//           ],
+//         ),
+//       ),
+//       child: Center(
+//         child: MyForm(),
+//       ),
+//     );
+//   }
+// }
 
 class CartPageContent extends StatelessWidget {
   @override
