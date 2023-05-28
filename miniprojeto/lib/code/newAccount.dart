@@ -1,33 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      // theme: ThemeData(primarySwatch: Colors.teal),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Color.fromRGBO(206, 252, 252, 1.0),
-        appBar: AppBar(
-          backgroundColor: Color.fromRGBO(149, 206, 207, 1.0),
-          leading: 
-            IconButton(
-              color: Colors.black,
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                // Lógica do botão de ação
-              },
-            ),
-        ),
-        body: MyForm(),
-      ),
-    );
-  }
-}
-
 class MyForm extends StatefulWidget {
   @override
   _MyFormState createState() => _MyFormState();
@@ -42,7 +15,6 @@ class _MyFormState extends State<MyForm> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      //configura o tipo de scroll
       scrollDirection: Axis.vertical,
       child: Container(
         padding: EdgeInsets.all(30),
@@ -62,7 +34,7 @@ class _MyFormState extends State<MyForm> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Please, input the informations";
+                    return "Please, input the information";
                   }
                   return null;
                 },
@@ -78,7 +50,7 @@ class _MyFormState extends State<MyForm> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Please, input a e-mail";
+                    return "Please, input an e-mail";
                   }
                   return null;
                 },
@@ -87,7 +59,7 @@ class _MyFormState extends State<MyForm> {
               Text("Create a password:", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               SizedBox(height: 10),
               TextFormField(
-                keyboardType: TextInputType.emailAddress,
+                obscureText: true,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Color.fromRGBO(109, 218, 205, 1.0)
@@ -100,17 +72,17 @@ class _MyFormState extends State<MyForm> {
                 },
               ),
               SizedBox(height: 45),
-              Center(child: 
-                Padding(
+              Center(
+                child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: ElevatedButton(
                     style: ButtonStyle(
                       minimumSize: MaterialStateProperty.all<Size>(Size(315, 66)),
                       backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(218, 109, 143, 1.0)),
-                      textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: ''))
+                      textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
                     ),
                     onPressed: () {
-                      //ação
+                      // Ação do botão "Create account"
                     },
                     child: Text("Create account"),
                   ),
@@ -119,7 +91,7 @@ class _MyFormState extends State<MyForm> {
             ],
           ),
         ),
-      )
+      ),
     );
   }
 }
