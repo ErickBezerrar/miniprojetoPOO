@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'code/homePage.dart';
 import 'code/newAccount.dart';
+import 'code/descripition.dart';
 
 void main() => runApp(MyApp());
 
@@ -78,27 +79,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-// class HomePageContent extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       decoration: BoxDecoration(
-//         gradient: LinearGradient(
-//           begin: Alignment.topCenter,
-//           end: Alignment.bottomCenter,
-//           colors: [
-//             Color.fromRGBO(206, 252, 252, 1.0),
-//             Colors.white,
-//           ],
-//         ),
-//       ),
-//       child: Center(
-//         child: Text('Conteúdo da Tela Principal'),
-//       ),
-//     );
-//   }
-// }
 
 class CartPageContent extends StatelessWidget {
   @override
