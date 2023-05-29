@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'code/homePage.dart';
@@ -8,8 +7,8 @@ import 'code/descripition.dart';
 import 'code/cartPage.dart';
 
 void main() => runApp(MyApp());
-=======
-import 'newAccount.dart';
+
+
 
 void main() {
   runApp(MyApp());
