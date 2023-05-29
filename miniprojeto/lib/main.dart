@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'code/homePage.dart';
 import 'code/newAccount.dart';
 import 'code/descripition.dart';
+import 'code/cartPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -80,23 +81,3 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class CartPageContent extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color.fromRGBO(206, 252, 252, 1.0),
-            Colors.white,
-          ],
-        ),
-      ),
-      child: Center(
-        child: Text('Esta é a tela do carrinho de compras'),
-      ),
-    );
-  }
-}
