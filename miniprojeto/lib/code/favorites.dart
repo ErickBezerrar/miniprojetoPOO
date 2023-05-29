@@ -10,7 +10,7 @@ class FavoritesBooksPage extends StatefulWidget {
 
 class _FavoritesBooksPageState extends State<FavoritesBooksPage> {
   List<dynamic> books = [];
-  change([], status: RxStatus.loading());
+  // change([], status: RxStatus.loading());
 
   Future<void> fetchBooks() async {
     final response = await http.get(Uri.https(
@@ -20,18 +20,17 @@ class _FavoritesBooksPageState extends State<FavoritesBooksPage> {
       'key': 'AIzaSyA5jvZzwUztQ4NT1c7YicLnOKTcUFQmutA'}
     ));
 
-    try {
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        setState(() {
-          books = data['items'];
-        });
-        change(dados, status: RxStatus.success());
-      }
-    } catch (e) {
-      change([], status: RxStatus.error('Erro ao buscar usuários'));
-
-    }
+    // try {
+    //   if (response.statusCode == 200) {
+    //     final data = jsonDecode(response.body);
+    //     setState(() {
+    //       books = data['items'];
+    //     });
+    //     change(dados, status: RxStatus.success());
+    //   }
+    // } catch (e) {
+    //   change([], status: RxStatus.error('Erro ao buscar usuários'));
+    // }
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
