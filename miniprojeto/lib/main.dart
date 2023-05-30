@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'code/homePage.dart';
 import 'code/newAccount.dart';
 import 'code/description.dart';
+import 'code/cartPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -42,15 +43,15 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Color.fromRGBO(149, 206, 207, 1.0),
         title: Text('BookStore'),
         leading: _currentIndex != 0
-          ? IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                setState(() {
-                  _currentIndex = 0;
-                });
-              },
-            )
-          : null,
+            ? IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  setState(() {
+                    _currentIndex = 0;
+                  });
+                },
+              )
+            : null,
       ),
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -79,27 +80,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-<<<<<<< HEAD
-=======
-class CartPageContent extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color.fromRGBO(206, 252, 252, 1.0),
-            Colors.white,
-          ],
-        ),
-      ),
-      child: Center(
-        child: Text('Esta é a tela do carrinho de compras'),
-      ),
-    );
-  }
-}
->>>>>>> 464703817427c6c56484fb4393a2085069514948
