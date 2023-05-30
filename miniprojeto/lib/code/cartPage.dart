@@ -10,8 +10,8 @@ class CartPageContent extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Color(0xFF2068AE), // Cor personalizada 1
-            Color(0xFF4AADD6), // Cor personalizada 2
+            Color(0xFF2068AE),
+            Color(0xFF4AADD6), 
           ],
         ),
       ),
@@ -33,7 +33,7 @@ class CartPageContent extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Image.asset(
-                          'assets/book_image.png', // Substitua pelo caminho da imagem do livro
+                          'assets/book_image.png',
                           width: 80,
                           height: 80,
                         ),
@@ -62,7 +62,6 @@ class CartPageContent extends StatelessWidget {
                       ),
                       IconButton(
                         onPressed: () {
-                          // Ação do botão "Excluir"
                         },
                         icon: Icon(Icons.delete),
                       ),
@@ -84,7 +83,7 @@ class CartPageContent extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                // Ação do botão "Fechar Pedido"
+                // Ação do botão Fechar Pedido
               },
               child: Text("Fechar Pedido"),
             ),
