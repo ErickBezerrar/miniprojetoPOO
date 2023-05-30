@@ -1,7 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-class CartPageContent extends StatelessWidget {
+class CartPageContent extends StatefulWidget {
+  @override
+  _CartPageContentState createState() => _CartPageContentState();
+}
+
+class _CartPageContentState extends State<CartPageContent> {
+  int quantity = 1;
+
+  void incrementQuantity() {
+    setState(() {
+      quantity++;
+    });
+  }
+
+  void decrementQuantity() {
+    setState(() {
+      if (quantity > 1) {
+        quantity--;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -11,7 +32,7 @@ class CartPageContent extends StatelessWidget {
           end: Alignment.bottomCenter,
           colors: [
             Color(0xFF2068AE),
-            Color(0xFF4AADD6), 
+            Color(0xFF4AADD6),
           ],
         ),
       ),
@@ -24,20 +45,13 @@ class CartPageContent extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Container(
                   width: double.infinity,
+                  height: 120, // Altura reduzida do container
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.asset(
-                          'assets/book_image.png',
-                          width: 80,
-                          height: 80,
-                        ),
-                      ),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +65,7 @@ class CartPageContent extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'R\$ 29,90',
+                              'R\$ ${(29.90 * quantity).toStringAsFixed(2)}',
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.grey[700],
@@ -60,8 +74,27 @@ class CartPageContent extends StatelessWidget {
                           ],
                         ),
                       ),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: decrementQuantity,
+                            icon: Icon(Icons.arrow_downward),
+                          ),
+                          Text(
+                            quantity.toString(),
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          IconButton(
+                            onPressed: incrementQuantity,
+                            icon: Icon(Icons.arrow_upward),
+                          ),
+                        ],
+                      ),
                       IconButton(
                         onPressed: () {
+                          setState(() {
+                            // Delete product
+                          });
                         },
                         icon: Icon(Icons.delete),
                       ),
@@ -72,6 +105,7 @@ class CartPageContent extends StatelessWidget {
             ),
           ),
           SizedBox(height: 16),
+          // Containers adicionais na parte inferior
           Container(
             margin: EdgeInsets.only(bottom: 16),
             child: ElevatedButton(
@@ -86,6 +120,136 @@ class CartPageContent extends StatelessWidget {
                 // Ação do botão Fechar Pedido
               },
               child: Text("Fechar Pedido"),
+            ),
+          ),
+          // Replicação de mais containers de produtos
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Align(
+              alignment: Alignment.center,
+              child: Container(
+                width: double.infinity,
+                height: 120, // Altura reduzida do container
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Nome do Livro',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'R\$ ${(29.90 * quantity).toStringAsFixed(2)}',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey[700],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: decrementQuantity,
+                          icon: Icon(Icons.arrow_downward),
+                        ),
+                        Text(
+                          quantity.toString(),
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        IconButton(
+                          onPressed: incrementQuantity,
+                          icon: Icon(Icons.arrow_upward),
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          // Delete product
+                        });
+                      },
+                      icon: Icon(Icons.delete),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 16),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Align(
+              alignment: Alignment.center,
+              child: Container(
+                width: double.infinity,
+                height: 120, // Altura reduzida do container
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Nome do Livro',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'R\$ ${(29.90 * quantity).toStringAsFixed(2)}',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey[700],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: decrementQuantity,
+                          icon: Icon(Icons.arrow_downward),
+                        ),
+                        Text(
+                          quantity.toString(),
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        IconButton(
+                          onPressed: incrementQuantity,
+                          icon: Icon(Icons.arrow_upward),
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          // Delete product
+                        });
+                      },
+                      icon: Icon(Icons.delete),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ],
