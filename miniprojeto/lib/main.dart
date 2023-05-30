@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'code/homePage.dart';
 import 'code/newAccount.dart';
-import 'code/descripition.dart';
+import 'code/description.dart';
 
 void main() => runApp(MyApp());
 
