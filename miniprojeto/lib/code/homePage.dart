@@ -93,7 +93,12 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
                                   fontSize: 20.0, fontStyle: FontStyle.italic)),
                         ),
                         onPressed: () {
-                          // Ação do botão "About"
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DescriptionBookPage(book: book),
+                            ),
+                          );
                         },
                         child: Text("About"),
                       ),
@@ -109,3 +114,6 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
     );
   }
 }
+
+
+
