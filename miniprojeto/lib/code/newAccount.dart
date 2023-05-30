@@ -8,9 +8,6 @@ class MyForm extends StatefulWidget {
 
 class _MyFormState extends State<MyForm> {
   final _formKey = GlobalKey<FormState>();
-  String _nacionality = "";
-  String _education = "sup";
-  double _currentSlideValue = 1;
 
   @override
   Widget build(BuildContext context) {
