@@ -80,27 +80,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-<<<<<<< HEAD
-=======
 
-class CartPageContent extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color.fromRGBO(206, 252, 252, 1.0),
-            Colors.white,
-          ],
-        ),
-      ),
-      child: Center(
-        child: Text('Esta é a tela do carrinho de compras'),
-      ),
-    );
-  }
-}
->>>>>>> 3c3fe7dd0a5a67c5616a7a472b4afcadbd62eed0
