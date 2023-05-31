@@ -16,7 +16,7 @@ class _FavoritesBooksPageState extends State<FavoritesBooksPage> {
     final response = await http.get(Uri.https(
       'www.googleapis.com',
       '/books/v1/volumes',
-      {'q': 'romance',
+      {'q': 'romance+terms',
       'key': 'AIzaSyA5jvZzwUztQ4NT1c7YicLnOKTcUFQmutA'}
     ));
 
@@ -51,14 +51,8 @@ class _FavoritesBooksPageState extends State<FavoritesBooksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(206, 252, 252, 1.0),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.blue.shade200, Colors.white],
-          ),
-        ),
         child: GridView.builder(
           padding: EdgeInsets.all(16.0),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -91,7 +85,7 @@ class _FavoritesBooksPageState extends State<FavoritesBooksPage> {
                       imageUrl: thumbnail,
                       fit: BoxFit.cover,
                       placeholder: (context, url) =>
-                          CircularProgressIndicator(),
+                        CircularProgressIndicator(),
                       errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
                   ),

@@ -26,7 +26,7 @@ class _CartPageContentState extends State<CartPageContent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.grey[200],
+      color: Color.fromRGBO(206, 252, 252, 1.0),
       padding: EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +46,7 @@ class _CartPageContentState extends State<CartPageContent> {
                 style: ButtonStyle(
                   minimumSize: MaterialStateProperty.all<Size>(Size(315, 66)),
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.pink),
+                    MaterialStateProperty.all<Color>(Colors.pink),
                   textStyle: MaterialStateProperty.all<TextStyle>(
                     TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
                   ),
@@ -100,6 +100,7 @@ class _CartPageContentState extends State<CartPageContent> {
               IconButton(
                 onPressed: () => incrementQuantity(index),
                 icon: Icon(Icons.arrow_upward),
+                color: Colors.black,
               ),
               Text(
                 quantities[index].toString(),

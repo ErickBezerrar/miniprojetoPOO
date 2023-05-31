@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          backgroundColor: Colors.white,
+          backgroundColor: Color.fromRGBO(149, 206, 207, 1.0),
           selectedItemColor: Colors.black,
           unselectedItemColor: Colors.black,
           selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
@@ -73,18 +73,25 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.black,
         backgroundColor: Color.fromRGBO(149, 206, 207, 1.0),
-        title: Text('BookStore'),
+        title: Text('BookStore', style: TextStyle(fontWeight: FontWeight.bold)),
+        actions: [IconButton(
+          icon: Icon(Icons.search, color: Colors.black, weight: 700),
+          onPressed: () {
+            //Ação do botão
+          })
+        ],
         leading: _currentIndex != 0
-            ? IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () {
-                  setState(() {
-                    _currentIndex = 0;
-                  });
-                },
-              )
-            : null,
+          ? IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                setState(() {
+                  _currentIndex = 0;
+                });
+              },
+            )
+          : null,
       ),
       body: GestureDetector(
         onTapDown: (_) {
