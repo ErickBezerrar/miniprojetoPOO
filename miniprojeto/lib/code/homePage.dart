@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-// import 'package:cached_network_image/cached_network_image.dart';
+import 'description.dart';
 
 class BookStoreHomePage extends StatefulWidget {
   @override
@@ -14,11 +14,9 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
 
   Future<void> fetchBooks() async {
     final response = await http.get(Uri.https(
-      'www.googleapis.com',
-      '/books/v1/volumes',
-      {'q': 'romance',
-      'key': 'AIzaSyA5jvZzwUztQ4NT1c7YicLnOKTcUFQmutA'}
-    ));
+        'www.googleapis.com',
+        '/books/v1/volumes',
+        {'q': 'romance', 'key': 'AIzaSyA5jvZzwUztQ4NT1c7YicLnOKTcUFQmutA'}));
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
@@ -59,9 +57,6 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
           itemBuilder: (context, index) {
             final book = books[index];
             final title = book['volumeInfo']['title'];
-            final authors = book['volumeInfo']['authors'] != null
-                ? book['volumeInfo']['authors'].join(', ')
-                : 'Unknown';
             final thumbnail = book['volumeInfo']['imageLinks'] != null
                 ? book['volumeInfo']['imageLinks']['thumbnail']
                 : 'https://via.placeholder.com/150';
@@ -84,20 +79,32 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
                     ),
                   ),
                   SizedBox(height: 8.0),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      title,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          minimumSize:
+                              MaterialStateProperty.all<Size>(Size(315, 66)),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Color.fromRGBO(218, 109, 143, 1.0)),
+                          textStyle: MaterialStateProperty.all<TextStyle>(
+                              TextStyle(
+                                  fontSize: 20.0, fontStyle: FontStyle.italic)),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DescriptionBookPage(book: book),
+                            ),
+                          );
+                        },
+                        child: Text("About"),
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(authors),
-                  ),
-                  SizedBox(height: 8.0),
+                  SizedBox(height: 10.0),
                 ],
               ),
             );
@@ -107,3 +114,6 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
     );
   }
 }
+
+
+
