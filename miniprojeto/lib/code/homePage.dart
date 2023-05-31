@@ -13,10 +13,12 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
   List<dynamic> books = [];
 
   Future<void> fetchBooks() async {
-    final response = await http.get(Uri.https(
-        'www.googleapis.com',
-        '/books/v1/volumes',
-        {'q': 'romance', 'key': 'AIzaSyA5jvZzwUztQ4NT1c7YicLnOKTcUFQmutA'}));
+    final response = await http.get(
+      Uri.https('www.googleapis.com', '/books/v1/volumes', {
+        'q': 'romance',
+        'key': 'AIzaSyA5jvZzwUztQ4NT1c7YicLnOKTcUFQmutA',
+      }),
+    );
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
@@ -37,6 +39,15 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'BookStore',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -45,8 +56,8 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
             colors: [Colors.blue.shade200, Colors.white],
           ),
         ),
+        padding: EdgeInsets.all(16.0),
         child: GridView.builder(
-          padding: EdgeInsets.all(16.0),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 16.0,
@@ -61,52 +72,45 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
                 ? book['volumeInfo']['imageLinks']['thumbnail']
                 : 'https://via.placeholder.com/150';
 
-            return Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
+            return Card(
+              shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: CachedNetworkImage(
-                      imageUrl: thumbnail,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) =>
-                          CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DescriptionBookPage(book: book),
                     ),
-                  ),
-                  SizedBox(height: 8.0),
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          minimumSize:
-                              MaterialStateProperty.all<Size>(Size(315, 66)),
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.pink),
-                          textStyle: MaterialStateProperty.all<TextStyle>(
-                              TextStyle(
-                                  fontSize: 20.0, fontStyle: FontStyle.italic)),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  DescriptionBookPage(book: book),
-                            ),
-                          );
-                        },
-                        child: Text("About"),
+                  );
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: CachedNetworkImage(
+                        imageUrl: thumbnail,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 10.0),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },
