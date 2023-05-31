@@ -15,7 +15,7 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
   Future<void> fetchBooks() async {
     final response = await http.get(
       Uri.https('www.googleapis.com', '/books/v1/volumes', {
-        'q': 'romance',
+        'q': 'romance+terms',
         'key': 'AIzaSyA5jvZzwUztQ4NT1c7YicLnOKTcUFQmutA',
       }),
     );
@@ -39,14 +39,8 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(206, 252, 252, 1.0),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.blue.shade200, Colors.white],
-          ),
-        ),
         padding: EdgeInsets.all(16.0),
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -84,7 +78,7 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
                         imageUrl: thumbnail,
                         fit: BoxFit.cover,
                         placeholder: (context, url) =>
-                            Center(child: CircularProgressIndicator()),
+                          Center(child: CircularProgressIndicator()),
                         errorWidget: (context, url, error) => Icon(Icons.error),
                       ),
                     ),

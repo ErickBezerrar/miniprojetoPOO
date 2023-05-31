@@ -40,7 +40,10 @@ class _DescriptionBookState extends State<DescriptionBookPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(206, 252, 252, 1.0),
       appBar: AppBar(
+        foregroundColor: Colors.black,
+        backgroundColor: Color.fromRGBO(149, 206, 207, 1.0),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -58,13 +61,6 @@ class _DescriptionBookState extends State<DescriptionBookPage> {
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.blue.shade200, Colors.white],
-          ),
-        ),
         child: Align(
           alignment: Alignment.center,
           child: Container(
@@ -87,10 +83,14 @@ class _DescriptionBookState extends State<DescriptionBookPage> {
                 final thumbnail = book['volumeInfo']['imageLinks'] != null
                     ? book['volumeInfo']['imageLinks']['thumbnail']
                     : 'https://via.placeholder.com/150';
-                final categories = book['volumeInfo']['categories'][0];
+                final categories = book['volumeInfo']['categories'] != null
+                    ? book['volumeInfo']['categories'][0]
+                    : 'Unknown';
                 final pageCount = book['volumeInfo']['pageCount'];
                 final language = book['volumeInfo']['language'];
-                final searchInfo = book['volumeInfo']['searchInfo'];
+                final description = book['volumeInfo']['description'] != null
+                    ? book['volumeInfo']['description'] 
+                    : 'Unknown';
 
                 return Container(
                   decoration: BoxDecoration(
@@ -123,64 +123,63 @@ class _DescriptionBookState extends State<DescriptionBookPage> {
                           imageUrl: thumbnail,
                           fit: BoxFit.cover,
                           placeholder: (context, url) =>
-                              CircularProgressIndicator(),
+                            CircularProgressIndicator(),
                           errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
+                            Icon(Icons.error),
                         ),
-                      ),
-                      SizedBox(height: 8.0),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text(
-                          'Description',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        child: searchInfo != null
-                            ? Text(searchInfo)
-                            : Text('No search information available'),
                       ),
                       SizedBox(height: 15.0),
                       Container(
                         width: 450,
-                        padding: EdgeInsets.all(12.0),
-                        color: Colors.blue.shade200.withOpacity(0.5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(
-                                'Category: $categories',
-                                style: TextStyle(fontWeight: FontWeight.bold,),
-                              ),
-                              Text(
-                                'Pages: $pageCount',
-                                style: TextStyle(fontWeight: FontWeight.bold,),
-                              ),
-                              Text(
-                                'Language: $language',
-                                style: TextStyle(fontWeight: FontWeight.bold,),
-                              ),
-                            ],
-                          ),                                                  
-                        ),                     
-                      SizedBox(height: 35),
+                        padding: EdgeInsets.symmetric(vertical: 12.0),
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(206, 252, 252, 1.0).withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(8.0)
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              'Category: $categories',
+                              style: TextStyle(fontWeight: FontWeight.bold,),
+                            ),
+                            Text(
+                              'Pages: $pageCount',
+                              style: TextStyle(fontWeight: FontWeight.bold,),
+                            ),
+                            Text(
+                              'Language: $language',
+                              style: TextStyle(fontWeight: FontWeight.bold,),
+                            ),
+                          ],
+                        ),                                                  
+                      ),   
+                      SizedBox(height: 15.0),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Description: $description',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.justify,
+                          ),
+                        ),
+                      ),                  
+                      SizedBox(height: 20),
                       Center(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16.0),
                           child: ElevatedButton(
                             style: ButtonStyle(
                               minimumSize: MaterialStateProperty.all<Size>(
-                                  Size(200, 66)),
+                                Size(315, 66)),
                               backgroundColor:
-                                  MaterialStateProperty.all<Color>(Colors.pink),
+                                MaterialStateProperty.all<Color>(Colors.pink),
                               textStyle: MaterialStateProperty.all<TextStyle>(
-                                  TextStyle(
-                                      fontSize: 12.0,
-                                      fontStyle: FontStyle.italic)),
+                                TextStyle(
+                                    fontSize: 20.0,
+                                    fontStyle: FontStyle.italic)),
                             ),
                             onPressed: () {
                               // Ação do botão "Buy now for $19.00"
