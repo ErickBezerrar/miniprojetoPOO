@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'code/homePage.dart';
 import 'code/newAccount.dart';
 import 'code/description.dart';
+import 'code/cartPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -42,15 +43,15 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Color.fromRGBO(149, 206, 207, 1.0),
         title: Text('BookStore'),
         leading: _currentIndex != 0
-          ? IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                setState(() {
-                  _currentIndex = 0;
-                });
-              },
-            )
-          : null,
+            ? IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  setState(() {
+                    _currentIndex = 0;
+                  });
+                },
+              )
+            : null,
       ),
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -79,6 +80,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+<<<<<<< HEAD
+=======
 
 class CartPageContent extends StatelessWidget {
   @override
@@ -100,3 +103,4 @@ class CartPageContent extends StatelessWidget {
     );
   }
 }
+>>>>>>> 3c3fe7dd0a5a67c5616a7a472b4afcadbd62eed0
