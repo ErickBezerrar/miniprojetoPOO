@@ -72,7 +72,7 @@ class _DescriptionBookState extends State<DescriptionBookPage> {
             padding: EdgeInsets.all(16.0),
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+                crossAxisCount: 1,
                 crossAxisSpacing: 100.0,
                 mainAxisSpacing: 30.0,
                 childAspectRatio: 0.75,
@@ -87,7 +87,7 @@ class _DescriptionBookState extends State<DescriptionBookPage> {
                 final thumbnail = book['volumeInfo']['imageLinks'] != null
                     ? book['volumeInfo']['imageLinks']['thumbnail']
                     : 'https://via.placeholder.com/150';
-                final categories = book['volumeInfo']['categories'];
+                final categories = book['volumeInfo']['categories'][0];
                 final pageCount = book['volumeInfo']['pageCount'];
                 final language = book['volumeInfo']['language'];
                 final searchInfo = book['volumeInfo']['searchInfo'];
@@ -98,22 +98,25 @@ class _DescriptionBookState extends State<DescriptionBookPage> {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(height: 8.0),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text(
-                          title,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                      Column(
+                        children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            title,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text(authors),
-                      ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(authors),
+                        ),
+                      ]),                   
                       SizedBox(height: 8.0),
                       Expanded(
                         child: CachedNetworkImage(
@@ -143,32 +146,27 @@ class _DescriptionBookState extends State<DescriptionBookPage> {
                       ),
                       SizedBox(height: 15.0),
                       Container(
+                        width: 450,
                         padding: EdgeInsets.all(12.0),
-                        color: Colors.blue.shade200,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              'Category: $categories',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                        color: Colors.blue.shade200.withOpacity(0.5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                'Category: $categories',
+                                style: TextStyle(fontWeight: FontWeight.bold,),
                               ),
-                            ),
-                            Text(
-                              'Pages: $pageCount',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                              Text(
+                                'Pages: $pageCount',
+                                style: TextStyle(fontWeight: FontWeight.bold,),
                               ),
-                            ),
-                            Text(
-                              'Language: $language',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                              Text(
+                                'Language: $language',
+                                style: TextStyle(fontWeight: FontWeight.bold,),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
+                            ],
+                          ),                                                  
+                        ),                     
                       SizedBox(height: 35),
                       Center(
                         child: Padding(
