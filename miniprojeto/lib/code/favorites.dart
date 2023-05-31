@@ -62,7 +62,7 @@ class _FavoritesBooksPageState extends State<FavoritesBooksPage> {
         child: GridView.builder(
           padding: EdgeInsets.all(16.0),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+            crossAxisCount: 1,
             crossAxisSpacing: 16.0,
             mainAxisSpacing: 16.0,
             childAspectRatio: 0.75,

@@ -15,7 +15,7 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
   Future<void> fetchBooks() async {
     final response = await http.get(
       Uri.https('www.googleapis.com', '/books/v1/volumes', {
-        'q': 'romance',
+        'q': 'romance+terms',
         'key': 'AIzaSyA5jvZzwUztQ4NT1c7YicLnOKTcUFQmutA',
       }),
     );

@@ -87,10 +87,12 @@ class _DescriptionBookState extends State<DescriptionBookPage> {
                 final thumbnail = book['volumeInfo']['imageLinks'] != null
                     ? book['volumeInfo']['imageLinks']['thumbnail']
                     : 'https://via.placeholder.com/150';
-                final categories = book['volumeInfo']['categories'][0];
+                final categories = book['volumeInfo']['categories'] != null
+                    ? book['volumeInfo']['categories'][0]
+                    : 'Unknown';
                 final pageCount = book['volumeInfo']['pageCount'];
                 final language = book['volumeInfo']['language'];
-                final searchInfo = book['volumeInfo']['searchInfo'];
+                final description = book['volumeInfo']['description'];
 
                 return Container(
                   decoration: BoxDecoration(
@@ -132,17 +134,11 @@ class _DescriptionBookState extends State<DescriptionBookPage> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 8.0),
                         child: Text(
-                          'Description',
+                          'Description: $description',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        child: searchInfo != null
-                            ? Text(searchInfo)
-                            : Text('No search information available'),
                       ),
                       SizedBox(height: 15.0),
                       Container(
@@ -174,12 +170,12 @@ class _DescriptionBookState extends State<DescriptionBookPage> {
                           child: ElevatedButton(
                             style: ButtonStyle(
                               minimumSize: MaterialStateProperty.all<Size>(
-                                  Size(200, 66)),
+                                  Size(315, 66)),
                               backgroundColor:
                                   MaterialStateProperty.all<Color>(Colors.pink),
                               textStyle: MaterialStateProperty.all<TextStyle>(
                                   TextStyle(
-                                      fontSize: 12.0,
+                                      fontSize: 20.0,
                                       fontStyle: FontStyle.italic)),
                             ),
                             onPressed: () {
