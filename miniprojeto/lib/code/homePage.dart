@@ -86,8 +86,8 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
                         style: ButtonStyle(
                           minimumSize:
                               MaterialStateProperty.all<Size>(Size(315, 66)),
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Color.fromRGBO(218, 109, 143, 1.0)),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.pink),
                           textStyle: MaterialStateProperty.all<TextStyle>(
                               TextStyle(
                                   fontSize: 20.0, fontStyle: FontStyle.italic)),
@@ -96,7 +96,8 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DescriptionBookPage(book: book),
+                              builder: (context) =>
+                                  DescriptionBookPage(book: book),
                             ),
                           );
                         },
@@ -114,6 +115,3 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
     );
   }
 }
-
-
-

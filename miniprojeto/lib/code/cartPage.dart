@@ -45,7 +45,8 @@ class _CartPageContentState extends State<CartPageContent> {
               child: ElevatedButton(
                 style: ButtonStyle(
                   minimumSize: MaterialStateProperty.all<Size>(Size(315, 66)),
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.pink),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.pink),
                   textStyle: MaterialStateProperty.all<TextStyle>(
                     TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
                   ),
