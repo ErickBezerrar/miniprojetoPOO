@@ -39,15 +39,6 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'BookStore',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -119,3 +110,5 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
     );
   }
 }
+
+

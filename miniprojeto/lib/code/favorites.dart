@@ -51,7 +51,6 @@ class _FavoritesBooksPageState extends State<FavoritesBooksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(actions: [Icon(Icons.star_border)],),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(

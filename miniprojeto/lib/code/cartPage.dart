@@ -85,7 +85,7 @@ class _CartPageContentState extends State<CartPageContent> {
                 ),
                 SizedBox(height: 8),
                 Text(
-                  'R\$ ${(price * quantities[index]).toStringAsFixed(2)}',
+                  '\$ ${(price * quantities[index]).toStringAsFixed(2)}',
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.grey[700],
@@ -98,16 +98,16 @@ class _CartPageContentState extends State<CartPageContent> {
           Column(
             children: [
               IconButton(
-                onPressed: () => decrementQuantity(index),
-                icon: Icon(Icons.arrow_downward),
+                onPressed: () => incrementQuantity(index),
+                icon: Icon(Icons.arrow_upward),
               ),
               Text(
                 quantities[index].toString(),
                 style: TextStyle(fontSize: 20),
               ),
               IconButton(
-                onPressed: () => incrementQuantity(index),
-                icon: Icon(Icons.arrow_upward),
+                onPressed: () => decrementQuantity(index),
+                icon: Icon(Icons.arrow_downward),
               ),
             ],
           ),
