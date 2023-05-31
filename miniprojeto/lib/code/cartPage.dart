@@ -7,7 +7,7 @@ class CartPageContent extends StatefulWidget {
 }
 
 class _CartPageContentState extends State<CartPageContent> {
-  List<int> quantities = [1, 1, 1]; // Separate quantity for each item
+  List<int> quantities = [1, 1, 1];
 
   void incrementQuantity(int index) {
     setState(() {
@@ -53,7 +53,7 @@ class _CartPageContentState extends State<CartPageContent> {
                 onPressed: () {
                   // Action for the "Fechar Pedido" button
                 },
-                child: Text("Fechar Pedido"),
+                child: Text("Close Order"),
               ),
             ),
           ),
