@@ -7,18 +7,18 @@ class CartPageContent extends StatefulWidget {
 }
 
 class _CartPageContentState extends State<CartPageContent> {
-  int quantity = 1;
+  List<int> quantities = [1, 1, 1]; // Separate quantity for each item
 
-  void incrementQuantity() {
+  void incrementQuantity(int index) {
     setState(() {
-      quantity++;
+      quantities[index]++;
     });
   }
 
-  void decrementQuantity() {
+  void decrementQuantity(int index) {
     setState(() {
-      if (quantity > 1) {
-        quantity--;
+      if (quantities[index] > 1) {
+        quantities[index]--;
       }
     });
   }
@@ -26,230 +26,89 @@ class _CartPageContentState extends State<CartPageContent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFF2068AE),
-            Color(0xFF4AADD6),
-          ],
-        ),
-      ),
+      color: Colors.grey[200],
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 16),
+          buildCartItem("Book 1", 29.90, 0),
+          SizedBox(height: 16),
+          buildCartItem("Book 2", 39.90, 1),
+          SizedBox(height: 16),
+          buildCartItem("Book 3", 19.90, 2),
+          SizedBox(height: 16),
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              margin: EdgeInsets.only(bottom: 16),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all<Size>(Size(315, 66)),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.pink),
+                  textStyle: MaterialStateProperty.all<TextStyle>(
+                    TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
+                  ),
+                ),
+                onPressed: () {
+                  // Action for the "Fechar Pedido" button
+                },
+                child: Text("Fechar Pedido"),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildCartItem(String bookName, double price, int index) {
+    return Container(
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
         children: [
           Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Align(
-                alignment: Alignment.center,
-                child: Container(
-                  width: double.infinity,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Nome do Livro',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              'R\$ ${(29.90 * quantity).toStringAsFixed(2)}',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey[700],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: decrementQuantity,
-                            icon: Icon(Icons.arrow_downward),
-                          ),
-                          Text(
-                            quantity.toString(),
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          IconButton(
-                            onPressed: incrementQuantity,
-                            icon: Icon(Icons.arrow_upward),
-                          ),
-                        ],
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            // Delete product
-                          });
-                        },
-                        icon: Icon(Icons.delete),
-                      ),
-                    ],
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  bookName,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
+                SizedBox(height: 8),
+                Text(
+                  'R\$ ${(price * quantities[index]).toStringAsFixed(2)}',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[700],
+                  ),
+                ),
+              ],
             ),
           ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Align(
-              alignment: Alignment.center,
-              child: Container(
-                width: double.infinity,
-                height: 120,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Nome do Livro',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            'R\$ ${(29.90 * quantity).toStringAsFixed(2)}',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey[700],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: decrementQuantity,
-                          icon: Icon(Icons.arrow_downward),
-                        ),
-                        Text(
-                          quantity.toString(),
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        IconButton(
-                          onPressed: incrementQuantity,
-                          icon: Icon(Icons.arrow_upward),
-                        ),
-                      ],
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          // Delete product
-                        });
-                      },
-                      icon: Icon(Icons.delete),
-                    ),
-                  ],
-                ),
+          SizedBox(width: 16),
+          Column(
+            children: [
+              IconButton(
+                onPressed: () => decrementQuantity(index),
+                icon: Icon(Icons.arrow_downward),
               ),
-            ),
-          ),
-          SizedBox(height: 16),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Align(
-              alignment: Alignment.center,
-              child: Container(
-                width: double.infinity,
-                height: 120,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Nome do Livro',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            'R\$ ${(29.90 * quantity).toStringAsFixed(2)}',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey[700],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: decrementQuantity,
-                          icon: Icon(Icons.arrow_downward),
-                        ),
-                        Text(
-                          quantity.toString(),
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        IconButton(
-                          onPressed: incrementQuantity,
-                          icon: Icon(Icons.arrow_upward),
-                        ),
-                      ],
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          // Delete product
-                        });
-                      },
-                      icon: Icon(Icons.delete),
-                    ),
-                  ],
-                ),
+              Text(
+                quantities[index].toString(),
+                style: TextStyle(fontSize: 20),
               ),
-            ),
-          ),
-          SizedBox(height: 16),
-          Container(
-            margin: EdgeInsets.only(bottom: 16),
-            child: ElevatedButton(
-              style: ButtonStyle(
-                minimumSize: MaterialStateProperty.all<Size>(Size(315, 66)),
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(Color.fromRGBO(218, 109, 143, 1.0)),
-                textStyle: MaterialStateProperty.all<TextStyle>(
-                  TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
-                ),
+              IconButton(
+                onPressed: () => incrementQuantity(index),
+                icon: Icon(Icons.arrow_upward),
               ),
-              onPressed: () {
-                // Ação do botão Fechar Pedido
-              },
-              child: Text("Fechar Pedido"),
-            ),
+            ],
           ),
         ],
       ),
