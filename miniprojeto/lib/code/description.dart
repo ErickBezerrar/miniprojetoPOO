@@ -16,7 +16,8 @@ class DescriptionBookPage extends StatefulWidget {
 
 class _DescriptionBookState extends State<DescriptionBookPage> {
   List<dynamic> books = [];
-  bool isBookFavorited = false; // Estado feito para controlar se o livro está favoritado ou não
+  bool isBookFavorited =
+      false; // Estado feito para controlar se o livro está favoritado ou não
 
   Future<void> fetchBooks() async {
     setState(() {
@@ -174,9 +175,14 @@ class _DescriptionBookState extends State<DescriptionBookPage> {
                           padding: const EdgeInsets.symmetric(vertical: 16.0),
                           child: ElevatedButton(
                             style: ButtonStyle(
-                              minimumSize: MaterialStateProperty.all<Size>(Size(200, 66)),
-                              backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(218, 109, 143, 1.0)),
-                              textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(fontSize: 12.0, fontStyle: FontStyle.italic)),
+                              minimumSize: MaterialStateProperty.all<Size>(
+                                  Size(200, 66)),
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(Colors.pink),
+                              textStyle: MaterialStateProperty.all<TextStyle>(
+                                  TextStyle(
+                                      fontSize: 12.0,
+                                      fontStyle: FontStyle.italic)),
                             ),
                             onPressed: () {
                               // Ação do botão "Buy now for $19.00"
