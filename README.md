@@ -46,10 +46,10 @@ ou consultar o arquivo ```pubspec.yaml``` do projeto original
 ## 4° Passo: Rodar o projeto 
 ```flutter run```
 
-## 5° Passo: Selecionar a opção de no desktop para visualizar as imagens
+## 5° Passo: Selecionar a opção para abrir no desktop 
 ```windows```
 
-# Divirta-se!
+## Divirta-se!
 
 
 
