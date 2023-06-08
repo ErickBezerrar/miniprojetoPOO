@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:miniprojeto/code/favorites.dart';
 import 'dart:convert';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'code/homePage.dart';
 import 'code/newAccount.dart';
 import 'code/description.dart';
@@ -108,7 +109,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           child: _pages[_currentIndex],
         ),
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: NewNavBar(itemSelectedCallback: dataService.carregar),
+    );
+  }
+}
+
+class NewNavBar extends HookWidget {
+  final _itemSelectedCallback;
+
+  NewNavBar({itemSelectedCallback}): _itemSelectedCallback = itemSelectedCallback ?? (int) {}
+
+  @override
+  Widget build(BuildContext context) {
+    var state = useState(1);
+    return Container(
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -124,6 +138,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
           child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            onTap: (index) {
+              state.value = index;
+              _itemSelectedCallback(index);
+            },
+            currentIndex: state.value,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
@@ -142,16 +162,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 label: 'Favorites',
               ),
             ],
-            currentIndex: _currentIndex,
-            onTap: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
           ),
         ),
-      ),
-    );
+      );
   }
 }
-
