@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-O projeto foi desenvolvido para composição da nota da segunda unidade da disciplina de Programação Orientada a Objetos I
+O projeto foi desenvolvido para composição da nota da segunda unidade da disciplina de Programação Orientada à Objetos I
 </p>
 
 <p align="center">
@@ -33,20 +33,20 @@ Esse projeto está sob a licença MIT.
 
 ## 🚀 Como acessar
 
-# 1° Passo: Clonar o repositório
+## 1° Passo: Clonar o repositório
 ```[git clone https://github.com/ErickBezerrar/miniprojetoPOO.git]```
 
-# 2° Passo: Acesse a pasta 
+## 2° Passo: Acessar a pasta 
 ```cd miniprojeto```
 
-# 3° Passo: Instale as dependências necessárias
+## 3° Passo: Instalar as dependências necessárias
 ```flutter pub get```
-ou consulte o arquivo ```pubspec.yaml``` do projeto original
+ou consultar o arquivo ```pubspec.yaml``` do projeto original
 
-# 4° Passo: Rode o projeto 
+## 4° Passo: Rodar o projeto 
 ```flutter run```
 
-# 5° Passo: Selecione a opção de no desktop para visualizar as imagens
+## 5° Passo: Selecionar a opção de no desktop para visualizar as imagens
 ```windows```
 
 # Divirta-se!
