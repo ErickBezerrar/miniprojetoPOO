@@ -6,7 +6,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'code/homePage.dart';
 import 'code/newAccount.dart';
 import 'code/description.dart';
-import 'code/cartPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,7 +40,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   final List<Widget> _pages = [
     BookStoreHomePage(), // Tela da página inicial
-    CartPageContent(), // Tela do carrinho de compras
     MyForm(), // Tela do formulário
     FavoritesBooksPage(), // Tela do Favoritos
   ];
