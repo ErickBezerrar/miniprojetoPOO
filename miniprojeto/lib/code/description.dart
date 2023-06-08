@@ -166,28 +166,6 @@ class _DescriptionBookState extends State<DescriptionBookPage> {
                           ),
                         ),
                       ),                  
-                      SizedBox(height: 20),
-                      Center(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16.0),
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              minimumSize: MaterialStateProperty.all<Size>(
-                                Size(315, 66)),
-                              backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.pink),
-                              textStyle: MaterialStateProperty.all<TextStyle>(
-                                TextStyle(
-                                    fontSize: 20.0,
-                                    fontStyle: FontStyle.italic)),
-                            ),
-                            onPressed: () {
-                              // Ação do botão "Buy now for $19.00"
-                            },
-                            child: Text("Buy now for 19.00 dollars"),
-                          ),
-                        ),
-                      )
                     ],
                   ),
                 );
