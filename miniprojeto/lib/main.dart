@@ -4,6 +4,7 @@ import 'package:miniprojeto/code/favorites.dart';
 import 'dart:convert';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'code/homePage.dart';
+import 'code/search.dart';
 import 'code/newAccount.dart';
 import 'code/description.dart';
 
@@ -75,11 +76,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         foregroundColor: Colors.black,
         backgroundColor: Color.fromRGBO(149, 206, 207, 1.0),
         title: Text('BookStore', style: TextStyle(fontWeight: FontWeight.bold)),
-        actions: [IconButton(
-          icon: Icon(Icons.search, color: Colors.black, weight: 700),
-          onPressed: () {
-            //Ação do botão
-          })
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search, color: Colors.black, weight: 700),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SearchPage(),
+                ),
+              );
+            },
+          ),
         ],
         leading: _currentIndex != 0
           ? IconButton(
