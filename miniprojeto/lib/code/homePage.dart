@@ -1,46 +1,102 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:miniprojeto/code/search.dart';
 import 'dart:convert';
 import 'description.dart';
 
-class BookStoreHomePage extends StatefulWidget {
-  @override
-  _BookStoreHomePageState createState() => _BookStoreHomePageState();
+enum TableStatus{idle, loading, ready, error}
+class DataService {
+  final ValueNotifier<Map<String,dynamic>> tableStateNotifier = ValueNotifier({
+    'status': TableStatus.idle,
+    'dataObjects': null
+  });
+
+  void carregar(index) {
+    tableStateNotifier.value = {
+      'status': TableStatus.loading,
+      'dataObjects': null
+    };
+    carregarBooks();
+  }
+
+  void carregarBooks() async {
+    var booksUri = Uri(
+      scheme: 'https',
+      host: 'www.googleapis.com',
+      path: '/books/v1/volumes',
+      queryParameters: {'q': 'romance+terms'}); 
+
+      http.read(booksUri).then((jsonString) {
+      var booksJson = jsonDecode(jsonString);
+      tableStateNotifier.value = {
+        'status': TableStatus.ready,
+        'dataObjects': booksJson
+      };
+    }).catchError((error) {
+      tableStateNotifier.value = {
+        'status': TableStatus.error,
+        'dataObjects': [],
+      };
+    });
+  }
 }
+final dataService = DataService();
 
-class _BookStoreHomePageState extends State<BookStoreHomePage> {
-  List<dynamic> books = [];
-
-  Future<void> fetchBooks() async {
-    final response = await http.get(
-      Uri.https('www.googleapis.com', '/books/v1/volumes', {
-        'q': 'romance+terms',
-        'key': 'AIzaSyA5jvZzwUztQ4NT1c7YicLnOKTcUFQmutA',
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      setState(() {
-        books = data['items'];
-      });
-    } else {
-      print('Failed to fetch books');
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchBooks();
-  }
-
+class BookStoreHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(206, 252, 252, 1.0),
-      body: Container(
+      body: ValueListenableBuilder(
+        valueListenable: dataService.tableStateNotifier,
+        builder: (_, value, __) {
+          switch (value['status']) {
+            case TableStatus.idle:
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 16),
+                    Text(
+                      "Clique em um dos botões abaixo para visualizar informações",
+                      style: TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+                    ),
+                  ],
+                ),
+              );
+            case TableStatus.loading:
+              return Center(child: CircularProgressIndicator());
+            case TableStatus.ready:
+              return ContainerBooks(jsonObjects: value['dataObjects']['items']);
+            case TableStatus.error:
+              return Center(
+                child: Text(
+                  "Um erro ocorreu ao carregar os dados. Por favor verifique sua conexão de internet e tente novamente.",
+                  style: TextStyle(fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+              );
+            default:
+              return Text("...");
+          }
+        },
+      ),
+    );
+  }
+}
+
+class ContainerBooks extends StatelessWidget {
+  final dynamic jsonObjects;
+
+  ContainerBooks({
+    required this.jsonObjects
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container (
         padding: EdgeInsets.all(16.0),
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -49,9 +105,9 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
             mainAxisSpacing: 16.0,
             childAspectRatio: 0.75,
           ),
-          itemCount: books.length,
+          itemCount: jsonObjects.length,
           itemBuilder: (context, index) {
-            final book = books[index];
+            final book = jsonObjects[index];
             final title = book['volumeInfo']['title'];
             final thumbnail = book['volumeInfo']['imageLinks'] != null
                 ? book['volumeInfo']['imageLinks']['thumbnail']
@@ -100,8 +156,7 @@ class _BookStoreHomePageState extends State<BookStoreHomePage> {
             );
           },
         ),
-      ),
-    );
+      );
   }
 }
 

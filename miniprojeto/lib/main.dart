@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:miniprojeto/code/favorites.dart';
 import 'dart:convert';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'code/homePage.dart';
+import 'code/search.dart';
 import 'code/newAccount.dart';
 import 'code/description.dart';
-import 'code/cartPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -40,7 +41,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   final List<Widget> _pages = [
     BookStoreHomePage(), // Tela da página inicial
-    CartPageContent(), // Tela do carrinho de compras
     MyForm(), // Tela do formulário
     FavoritesBooksPage(), // Tela do Favoritos
   ];
@@ -76,11 +76,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         foregroundColor: Colors.black,
         backgroundColor: Color.fromRGBO(149, 206, 207, 1.0),
         title: Text('BookStore', style: TextStyle(fontWeight: FontWeight.bold)),
-        actions: [IconButton(
-          icon: Icon(Icons.search, color: Colors.black, weight: 700),
-          onPressed: () {
-            //Ação do botão
-          })
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search, color: Colors.black, weight: 700),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SearchPage(),
+                ),
+              );
+            },
+          ),
         ],
         leading: _currentIndex != 0
           ? IconButton(
@@ -108,7 +115,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           child: _pages[_currentIndex],
         ),
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: NewNavBar(itemSelectedCallback: dataService.carregar),
+    );
+  }
+}
+
+class NewNavBar extends HookWidget {
+  final _itemSelectedCallback;
+
+  NewNavBar({itemSelectedCallback}): _itemSelectedCallback = itemSelectedCallback ?? (int) {}
+
+  @override
+  Widget build(BuildContext context) {
+    var state = useState(1);
+    return Container(
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -124,6 +144,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
           child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            onTap: (index) {
+              state.value = index;
+              _itemSelectedCallback(index);
+            },
+            currentIndex: state.value,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
@@ -142,16 +168,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 label: 'Favorites',
               ),
             ],
-            currentIndex: _currentIndex,
-            onTap: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
           ),
         ),
-      ),
-    );
+      );
   }
 }
-
