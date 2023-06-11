@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'homePage.dart';
+import 'favorites.dart';
+import 'globals.dart';
 
 class DescriptionBookPage extends StatefulWidget {
   final Map<String, dynamic> book;
@@ -19,6 +21,8 @@ class _DescriptionBookState extends State<DescriptionBookPage> {
   bool isBookFavorited =
       false; // Estado feito para controlar se o livro está favoritado ou não
 
+  final FavoritesPage favoritesPage = FavoritesPage();
+
   Future<void> fetchBooks() async {
     setState(() {
       books = [widget.book]; // Passando apenas o livro como parâmetro
@@ -31,11 +35,18 @@ class _DescriptionBookState extends State<DescriptionBookPage> {
     fetchBooks();
   }
 
-  void toggleFavorite() {
-    setState(() {
-      isBookFavorited = !isBookFavorited;
-    });
-  }
+    void toggleFavorite() {
+      setState(() {
+        if (favoriteBooks.contains(widget.book)) {
+          favoriteBooks.remove(widget.book);
+          isBookFavorited = false;
+        } else {
+          favoriteBooks.add(widget.book);
+          isBookFavorited = true;
+        }
+      });
+    }
+
 
   @override
   Widget build(BuildContext context) {

@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:miniprojeto/code/search.dart';
 import 'dart:convert';
 import 'description.dart';
+import 'favorites.dart';
 
 enum TableStatus{idle, loading, ready, error}
 class DataService {
@@ -83,9 +84,21 @@ class BookStoreHomePage extends StatelessWidget {
           }
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => FavoritesPage()),
+          );
+        },
+        child: Icon(Icons.favorite),
+        backgroundColor: Colors.red,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
+
 
 class ContainerBooks extends StatelessWidget {
   final dynamic jsonObjects;

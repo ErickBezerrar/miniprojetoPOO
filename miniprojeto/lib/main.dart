@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   final List<Widget> _pages = [
     BookStoreHomePage(), // Tela da página inicial
     MyForm(), // Tela do formulário
-    FavoritesBooksPage(), // Tela do Favoritos
+    //FavoritesPage(), // Tela do Favoritos
   ];
 
   AnimationController? _animationController;
