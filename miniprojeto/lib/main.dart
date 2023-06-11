@@ -35,66 +35,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  int _currentIndex = 0;
-
-  final List<Widget> _pages = [
-    BookStoreHomePage(), // Tela da página inicial
-    MyForm(), // Tela do formulário
-  ];
-
-  AnimationController? _animationController;
-  Animation<double>? _scaleAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      duration: Duration(milliseconds: 200),
-      vsync: this,
-    );
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
-      CurvedAnimation(
-        parent: _animationController!,
-        curve: Curves.easeInOut,
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _animationController?.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: GestureDetector(
-        onTapDown: (_) {
-          _animationController?.forward();
-        },
-        onTapUp: (_) {
-          _animationController?.reverse();
-        },
-        onTapCancel: () {
-          _animationController?.reverse();
-        },
-        child: ScaleTransition(
-          scale: _scaleAnimation!,
-          child: _pages[_currentIndex],
-        ),
-      ),
-      bottomNavigationBar: NewNavBar(),
-    );
-  }
-}
-
 class NewNavBar extends HookWidget {
   final _itemSelectedCallback;
 
