@@ -28,18 +28,19 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(206, 252, 252, 1.0),
+        backgroundColor: Color.fromRGBO(149, 206, 207, 1.0),
         title: Text(
           'Search book',
           style: TextStyle(
-            color: Colors.black, 
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
         ),
         iconTheme: IconThemeData(
-          color: Colors.black, 
+          color: Colors.black,
         ),
       ),
-    backgroundColor: Color.fromRGBO(206, 252, 252, 1.0),
+      backgroundColor: Color.fromRGBO(206, 252, 252, 1.0),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
@@ -51,28 +52,28 @@ class _SearchPageState extends State<SearchPage> {
                 labelText: 'Write the title of the book',
               ),
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(height: 30),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        minimumSize:
-                          MaterialStateProperty.all<Size>(Size(315, 66)),
-                        backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.pink),
-                        textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(fontSize: 16.0, fontStyle: FontStyle.italic)),
-                      ),
-                      onPressed: () => search(context),
-                      child: Text('Search'),
-                    ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all<Size>(Size(315, 66)),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.pink),
+                    textStyle: MaterialStateProperty.all<TextStyle>(
+                        TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
                   ),
-                )
-            ],
+                  onPressed: () => search(context),
+                  child: Text('Search'),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -124,15 +125,16 @@ class _SearchResultPageState extends State<SearchResultPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(206, 252, 252, 1.0),
+        backgroundColor: Color.fromRGBO(149, 206, 207, 1.0),
         title: Text(
           'Search book',
           style: TextStyle(
-            color: Colors.black, 
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
         ),
         iconTheme: IconThemeData(
-          color: Colors.black, 
+          color: Colors.black,
         ),
       ),
       backgroundColor: Color.fromRGBO(206, 252, 252, 1.0),

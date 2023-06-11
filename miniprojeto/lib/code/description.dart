@@ -64,8 +64,8 @@ class _DescriptionBookState extends State<DescriptionBookPage> {
         actions: [
           IconButton(
             icon: Icon(
-              isBookFavorited ? Icons.star : Icons.star_border,
-              color: isBookFavorited ? Colors.yellow : null,
+              isBookFavorited ? Icons.favorite : Icons.favorite,
+              color: isBookFavorited ? Colors.pink : null,
             ),
             onPressed: toggleFavorite,
           ),

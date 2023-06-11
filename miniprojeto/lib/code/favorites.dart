@@ -15,9 +15,10 @@ class FavoritesPage extends StatelessWidget {
         backgroundColor: Color.fromRGBO(149, 206, 207, 1.0),
         title: Text('Favorites', style: TextStyle(fontWeight: FontWeight.bold)),
       ),
-      body: favoriteBooks.isNotEmpty
+      body: favoriteBooks.isNotEmpty      
           ? GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 16.0,
                 mainAxisSpacing: 16.0,
@@ -70,7 +71,7 @@ class FavoritesPage extends StatelessWidget {
             )
           : Center(
               child: Text(
-                "Nenhum livro favorito.",
+                "None favorited book.",
                 style: TextStyle(fontSize: 16),
                 textAlign: TextAlign.center,
               ),
