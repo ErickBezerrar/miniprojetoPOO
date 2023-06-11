@@ -26,96 +26,11 @@ class MyApp extends StatelessWidget {
           unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
         ),
       ),
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  int _currentIndex = 0;
-
-  final List<Widget> _pages = [
-    BookStoreHomePage(), // Tela da página inicial
-    MyForm(), // Tela do formulário
-    FavoritesBooksPage(), // Tela do Favoritos
-  ];
-
-  AnimationController? _animationController;
-  Animation<double>? _scaleAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      duration: Duration(milliseconds: 200),
-      vsync: this,
-    );
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
-      CurvedAnimation(
-        parent: _animationController!,
-        curve: Curves.easeInOut,
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _animationController?.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        foregroundColor: Colors.black,
-        backgroundColor: Color.fromRGBO(149, 206, 207, 1.0),
-        title: Text('BookStore', style: TextStyle(fontWeight: FontWeight.bold)),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search, color: Colors.black, weight: 700),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SearchPage(),
-                ),
-              );
-            },
-          ),
-        ],
-        leading: _currentIndex != 0
-          ? IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                setState(() {
-                  _currentIndex = 0;
-                });
-              },
-            )
-          : null,
-      ),
-      body: GestureDetector(
-        onTapDown: (_) {
-          _animationController?.forward();
-        },
-        onTapUp: (_) {
-          _animationController?.reverse();
-        },
-        onTapCancel: () {
-          _animationController?.reverse();
-        },
-        child: ScaleTransition(
-          scale: _scaleAnimation!,
-          child: _pages[_currentIndex],
-        ),
-      ),
-      bottomNavigationBar: NewNavBar(itemSelectedCallback: dataService.carregar),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => BookStoreHomePage(),
+        '/code': (context) => MyForm(),
+      },
     );
   }
 }
@@ -123,53 +38,50 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 class NewNavBar extends HookWidget {
   final _itemSelectedCallback;
 
-  NewNavBar({itemSelectedCallback}): _itemSelectedCallback = itemSelectedCallback ?? (int) {}
+  NewNavBar({itemSelectedCallback})
+      : _itemSelectedCallback = itemSelectedCallback ?? (int) {}
 
   @override
   Widget build(BuildContext context) {
     var state = useState(1);
     return Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
-              spreadRadius: 2,
-              blurRadius: 10,
-              offset: Offset(0, -1),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 10,
+            offset: Offset(0, -1),
+          ),
+        ],
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          onTap: (index) {
+            state.value = index;
+            if (index == 0) {
+              Navigator.popUntil(context, ModalRoute.withName('/'));
+            } else if (index == 1) {
+              Navigator.pushNamed(context, '/code');
+            }
+          },
+          currentIndex: state.value,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
             ),
           ],
-          borderRadius: BorderRadius.circular(16),
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            onTap: (index) {
-              state.value = index;
-              _itemSelectedCallback(index);
-            },
-            currentIndex: state.value,
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart),
-                label: 'Cart',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Profile',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.star),
-                label: 'Favorites',
-              ),
-            ],
-          ),
-        ),
-      );
+      ),
+    );
   }
 }

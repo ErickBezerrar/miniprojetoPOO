@@ -1,19 +1,19 @@
 import "package:flutter/material.dart";
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'homePage.dart';
+import 'package:miniprojeto/main.dart';
 
-class MyForm extends StatefulWidget {
-  @override
-  _MyFormState createState() => _MyFormState();
-}
-
-class _MyFormState extends State<MyForm> {
+class MyForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(206, 252, 252, 1.0),
+      appBar: AppBar(
+        foregroundColor: Colors.black,
+        backgroundColor: Color.fromRGBO(149, 206, 207, 1.0),
+      ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
@@ -97,6 +97,7 @@ class _MyFormState extends State<MyForm> {
           ),
         ),
       ),
+      bottomNavigationBar: NewNavBar(),
     );
   }
 }

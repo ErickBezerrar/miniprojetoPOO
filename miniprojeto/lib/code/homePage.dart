@@ -1,18 +1,21 @@
+import 'dart:html';
+import 'package:miniprojeto/main.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:miniprojeto/code/search.dart';
 import 'dart:convert';
 import 'description.dart';
+import 'favorites.dart';
+import 'newAccount.dart';
 
-enum TableStatus{idle, loading, ready, error}
+enum TableStatus { idle, loading, ready, error }
+
 class DataService {
-  final ValueNotifier<Map<String,dynamic>> tableStateNotifier = ValueNotifier({
-    'status': TableStatus.idle,
-    'dataObjects': null
-  });
+  final ValueNotifier<Map<String, dynamic>> tableStateNotifier =
+      ValueNotifier({'status': TableStatus.idle, 'dataObjects': null});
 
-  void carregar(index) {
+  void carregar() {
     tableStateNotifier.value = {
       'status': TableStatus.loading,
       'dataObjects': null
@@ -22,12 +25,12 @@ class DataService {
 
   void carregarBooks() async {
     var booksUri = Uri(
-      scheme: 'https',
-      host: 'www.googleapis.com',
-      path: '/books/v1/volumes',
-      queryParameters: {'q': 'romance+terms'}); 
+        scheme: 'https',
+        host: 'www.googleapis.com',
+        path: '/books/v1/volumes',
+        queryParameters: {'q': 'romance+terms'});
 
-      http.read(booksUri).then((jsonString) {
+    http.read(booksUri).then((jsonString) {
       var booksJson = jsonDecode(jsonString);
       tableStateNotifier.value = {
         'status': TableStatus.ready,
@@ -41,13 +44,33 @@ class DataService {
     });
   }
 }
+
 final dataService = DataService();
 
 class BookStoreHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    dataService.carregar();
     return Scaffold(
       backgroundColor: Color.fromRGBO(206, 252, 252, 1.0),
+      appBar: AppBar(
+        foregroundColor: Colors.black,
+        backgroundColor: Color.fromRGBO(149, 206, 207, 1.0),
+        title: Text('BookStore', style: TextStyle(fontWeight: FontWeight.bold)),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search, color: Colors.black, weight: 700),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SearchPage(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: ValueListenableBuilder(
         valueListenable: dataService.tableStateNotifier,
         builder: (_, value, __) {
@@ -61,7 +84,9 @@ class BookStoreHomePage extends StatelessWidget {
                     Text(
                       "Clique em um dos botões abaixo para visualizar informações",
                       style: TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic),
                     ),
                   ],
                 ),
@@ -83,6 +108,19 @@ class BookStoreHomePage extends StatelessWidget {
           }
         },
       ),
+      bottomNavigationBar:
+          NewNavBar(itemSelectedCallback: dataService.carregar),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => FavoritesPage()),
+          );
+        },
+        child: Icon(Icons.favorite),
+        backgroundColor: Colors.pink,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
@@ -90,74 +128,70 @@ class BookStoreHomePage extends StatelessWidget {
 class ContainerBooks extends StatelessWidget {
   final dynamic jsonObjects;
 
-  ContainerBooks({
-    required this.jsonObjects
-  });
+  ContainerBooks({required this.jsonObjects});
 
   @override
   Widget build(BuildContext context) {
-    return Container (
-        padding: EdgeInsets.all(16.0),
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 16.0,
-            mainAxisSpacing: 16.0,
-            childAspectRatio: 0.75,
-          ),
-          itemCount: jsonObjects.length,
-          itemBuilder: (context, index) {
-            final book = jsonObjects[index];
-            final title = book['volumeInfo']['title'];
-            final thumbnail = book['volumeInfo']['imageLinks'] != null
-                ? book['volumeInfo']['imageLinks']['thumbnail']
-                : 'https://via.placeholder.com/150';
-
-            return Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DescriptionBookPage(book: book),
-                    ),
-                  );
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: CachedNetworkImage(
-                        imageUrl: thumbnail,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) =>
-                          Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 16.0,
+          mainAxisSpacing: 16.0,
+          childAspectRatio: 0.75,
         ),
-      );
+        itemCount: jsonObjects.length,
+        itemBuilder: (context, index) {
+          final book = jsonObjects[index];
+          final title = book['volumeInfo']['title'];
+          final thumbnail = book['volumeInfo']['imageLinks'] != null
+              ? book['volumeInfo']['imageLinks']['thumbnail']
+              : 'https://via.placeholder.com/150';
+
+          return Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DescriptionBookPage(book: book),
+                  ),
+                );
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: CachedNetworkImage(
+                      imageUrl: thumbnail,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) =>
+                          Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 }
-
-
